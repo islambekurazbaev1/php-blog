@@ -2,15 +2,15 @@
 <html lang="en">
 
 <head>
-<?php 
+    <?php 
     $title = 'Блогы';
     require 'includes/css.php';
 ?>
 </head>
 
 <body>
-<?php require 'includes/navbar.php'; ?>
-            
+    <?php require 'includes/navbar.php'; ?>
+
     <main>
 
         <section class="py-3 text-center container">

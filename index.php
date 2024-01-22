@@ -4,7 +4,8 @@
 <head>
     <?php
         $title = 'Главный'; 
-        require 'includes/css.php'; 
+        require 'includes/css.php';
+        require 'includes/database.php';
     ?>
 </head>
 

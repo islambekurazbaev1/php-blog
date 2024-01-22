@@ -1,11 +1,23 @@
 <?php
 $title = "Добавить Post";
-require 'includes/navbar.php';
+// require 'includes/navbar.php';
 require 'includes/css.php';
 require 'includes/database.php';
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         var_dump($_POST);
+
+        $title = ($_POST['title']);
+        $text = ($_POST['text']);
+        print_r ($_POST);
+    }
+    
+    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
+        $stmt = $pdo->prepare("INSERT INTO posts (title, text) VALUES (:title, :text)");
+        $stmt->execute([
+            'title' =>  $title,
+            'text' => $text,
+        ]);
     }
 
 ?>
@@ -31,7 +43,7 @@ require 'includes/database.php';
                 <div class="mb-3">
                     <label class="form-label">Текст</label>
                     <textarea class="form-control" rows="3" name="text"></textarea>
-                    <button type="submit" class="btn btn-primary mt-3">Отправить</button>
+                    <button type="submit" class="btn btn-primary mt-3" name="submit">Отправить</button>
                 </div>
             </form>
         </div>

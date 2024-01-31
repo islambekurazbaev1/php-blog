@@ -1,12 +1,11 @@
-<!doctype html>
-<html lang="en">
-
 <head>
     <?php 
+    session_start();
+
     $title = 'Блогы';
     require 'includes/css.php';
     require 'includes/database.php';
-
+    // test($_SESSION);
     $sql = "SELECT * FROM posts";
     $statement = $pdo->prepare($sql);
     $statement->execute();
@@ -39,33 +38,55 @@
 
         <div class="album py-5 bg-light">
             <div class="container">
+
+                <?php if(isset($_SESSION['message'])):?>
+                <div class="alert alert-success" role="alert">
+                    <?= $_SESSION['message']; ?>
+                </div>
+                <?php endif; ?>
+                <?php 
+                    unset($_SESSION['message']);
+                ?>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     <?php foreach ($posts as $post): ?>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                                        dy=".3em">Thumbnail</text>
-                                </svg>
-                                <div class="card-body">
-                                    <h4><a href="post-show.php?id=<?php echo $post['id']?>"><?php echo $post['title'] ?></a></h4>
-                                    <p class="card-text"><?= $post['text'] ?></p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                        <a href="post-edit.php" type="button" class="btn btn-success">Изменить</ф>
-                                        <a type="button" class="btn btn-danger">Удалить</a>
-                                        </div>
-                                        <small>
-                                            <?= $post['created_at'] ?>
-                                        </small>
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Blog"
+                                preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
+                                    dy=".3em">Blog</text>
+                            </svg>
+                            <div class="card-body">
+                                <h4><a class="text-decoration-none"
+                                        href="post-show.php?id=<?php echo $post['id']?>"><?php echo $post['title'] ?></a>
+                                </h4>
+                                <p class="card-text"><?= $post['text'] ?></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="post-edit.php?id=<?= $post['id']?>" type="button"
+                                            class="btn btn-primary">Изменить</a>
+                                        <a href="post-delete.php?id=<?= $post['id'] ?>" type="button"
+                                            class="btn btn-danger">Удалить</a>
                                     </div>
+                                    <small>
+                                        <?= $post['created_at'] ?>
+                                    </small>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <?php endforeach ?>
+
+                    <script>
+                    function truncateText() {
+                        var text = document.getElementById("text").innerHTML;
+                        var truncated = text.substring(0, 20) + "...";
+                        document.getElementById("text").innerHTML = truncated;
+                    }
+                    </script>
+
                 </div>
             </div>
         </div>
@@ -73,12 +94,6 @@
     </main>
 
     <?php require 'includes/footer.php'; ?>
-
-
-    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
-
 
 </body>
 

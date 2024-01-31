@@ -13,4 +13,11 @@ try {
 } catch(PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
+
+function test($data) {
+   echo '<pre>';
+   print_r ($data);
+   echo '</pre>';
+   exit;
+}
 ?>

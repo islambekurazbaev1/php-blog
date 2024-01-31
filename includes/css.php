@@ -12,4 +12,5 @@
     <?php
         echo $title;
     ?>
+
 </title>

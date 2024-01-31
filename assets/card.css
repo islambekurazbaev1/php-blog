@@ -72,3 +72,8 @@
       flex: 1;
     }
   }
+
+  .card-boy .card-text {
+    text-overflow: ellipsis " [..]";
+    color: red;
+}
